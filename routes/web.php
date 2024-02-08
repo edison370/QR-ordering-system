@@ -28,7 +28,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/report', [UserController::class, 'getAll'])->name('report');
+    Route::get('/userReport',function () {
+        return view('page.userReport');
+    })->name('userReport');
+
+    Route::get('/userReportResult', [UserController::class, 'getAll'])->name('userReportResult');
 });
 
 require __DIR__.'/auth.php';

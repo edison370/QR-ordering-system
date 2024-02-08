@@ -15,10 +15,13 @@ class UserController extends Controller
     /**
      * Display all users.
      */
-    public function getAll(Request $request): View
+    public function getAll(Request $request)
     {
-        return view('page.report', [
-            'users' => User::paginate(1),
-        ]);
+        $users = User::paginate(1);
+        //$users->withPath('UserReport');
+
+        return view('report.UserReportResult', [
+            'users' => $users,
+        ])->render();
     }
 }
