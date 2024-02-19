@@ -52,6 +52,8 @@
         </svg>
         <span class="sr-only">Loading...</span>
     </div>
+
+    <div class="pointer-events-none opacity-40 hidden"></div>
 </body>
 
 </html>

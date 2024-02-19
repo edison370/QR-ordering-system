@@ -1,7 +1,8 @@
-@props([''])
+@props(['url', 'loadID'])
 
 @php
-
+    $url = $url ?? Request::segment(1);
+    $loadID = $loadID ?? Request::segment(1);
 @endphp
 
 @if (isset($grandTotal))
@@ -36,9 +37,6 @@
 <script type="module">
 
     $(document).ready(function() {
-        //After load completed remove loading animation
-        $("#searchBtn svg").addClass("hidden");
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -51,10 +49,12 @@
             e.preventDefault();
             let page = $(this).attr('href').split('page=')[1]
 
+            let url = "{{ $url }}?page=" + page;
+
             $.ajax({
-                url: "/userReportResult?page=" + page,
+                url: url,
                 success: function(res) {
-                    $('#userReportResult').html(res);
+                    $('#{{ $loadID }}').html(res);
                     stopPageLoading();
                 }
             })

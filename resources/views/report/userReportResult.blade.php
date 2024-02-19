@@ -1,4 +1,4 @@
-<x-table-report>
+<x-table-report loadID="userReportResult" url="/userReportResult">
     @if (isset($users))
         <x-slot name="grandTotal">
             <x-box>
