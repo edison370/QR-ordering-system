@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Home</title>
     <link rel="icon" href="{{ url('/images/favicon.png') }}"/>
 
     <!-- Fonts -->
@@ -21,14 +21,12 @@
 <body class="font-sans antialiased">
     <div id="body" class="relative">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+            @include('modules.client.layouts.navigation')
 
             <!-- Page Heading -->
             @if (isset($header))
-                <header class="bg-white shadow py-2">
-                    <div class="items-center flex justify-start ">
-                        @include('layouts.sidebar')
-
+                <header class="bg-white shadow py-2 px-6 sm:px-4 ">
+                    <div class="items-center flex justify-start">
                         {{ $header }}
                     </div>
                 </header>

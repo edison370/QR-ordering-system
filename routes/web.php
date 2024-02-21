@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('modules.client.home');
+})->name('client.home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
