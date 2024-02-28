@@ -1,11 +1,11 @@
-<div class="flex flex-wrap">
+<div class="flex flex-wrap gap-6 mb-4">
 
     @foreach ($items as $i)
         <div
-            class="m-4 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow hover:shadow-2xl hover:scale-105 duration-200">
+            class="w-full sm:max-w-64 bg-white border border-gray-200 rounded-t-lg shadow hover:shadow-2xl duration-200">
 
             @if ($i->imagePath)
-                <img class="m-8 mb-0 rounded-lg mx-auto" src="{{ $i->imagePath }}" alt="category image" />
+                <img class="rounded-t-lg mx-auto w-full" src="{{ $i->imagePath }}" alt="category image" />
             @endif
 
             <div class="px-5 py-5">

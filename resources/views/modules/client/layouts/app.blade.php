@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Home</title>
-    <link rel="icon" href="{{ url('/images/favicon.png') }}"/>
+    <link rel="icon" href="{{ url('/images/favicon.png') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,27 +19,25 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div id="body" class="relative">
+    <div id="body">
         <div class="min-h-screen bg-gray-100">
-            @include('modules.client.layouts.navigation')
+            <div class="fixed w-full start-0">
+                @include('modules.client.layouts.navigation')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow py-2 px-6 sm:px-4 ">
-                    <div class="items-center flex justify-start">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+                <!-- Page Heading -->
+                @if (isset($header))
+                    {{ $header }}
+                @endif
+            </div>
 
             <!-- Page Content -->
-            <main>
+            <main class="pt-28">
                 {{ $slot }}
             </main>
         </div>
     </div>
 
-    <div class="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 hidden" id="pageLoading">
+    <div class="fixed -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2 hidden" id="pageLoading">
         <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
             viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
