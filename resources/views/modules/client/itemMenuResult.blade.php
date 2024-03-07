@@ -39,8 +39,8 @@
                 } else {
                     document.body.classList.remove('overflow-y-hidden');
                 }
-            })" x-on:open-modal.window="$event.detail == '123' ? open = true : null"
-                x-on:close-modal.window="$event.detail == '123' ? open = false : null" x-on:close.stop="open = false"
+            })" x-on:open-modal.window="$event.detail == 'modal' ? open = true : null"
+                x-on:close-modal.window="$event.detail == 'modal' ? open = false : null" x-on:close.stop="open = false"
                 x-on:keydown.escape.window="open = false"
                 x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
                 x-on:keydown.shift.tab.prevent="prevFocusable().focus()" x-show="open"

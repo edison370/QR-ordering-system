@@ -21,4 +21,8 @@ class Item_detail extends Model
         'description',
     ];
 
+    public function item(){
+        return $this->belongsTo(Item::class);
+    }
+
 }

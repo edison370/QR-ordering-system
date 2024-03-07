@@ -3,6 +3,7 @@
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MenuController::class, 'homeCategory'])->name('client.home');
 
 Route::get('/Category/{name}', [MenuController::class, 'getCategoryItems'])->name('client.itemResult');
+
+Route::get('/OrderHistory', [OrderController::class, 'getClientOrder'])->name('client.orderHistory');
 
 //authentication view
 Route::get('/dashboard', function () {

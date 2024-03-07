@@ -1,7 +1,7 @@
 @props([''])
 
 <div x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
-    <div @click="open = ! open" class="px-6 sm:px-4 lg:px-8">
+    <div @click="open = ! open">
         {{ $trigger }}
     </div>
 
@@ -13,7 +13,7 @@
         x-transition:leave-start="transform translate-x-0" 
         x-transition:leave-end="transform -translate-x-full"
      
-        class="absolute top-0 left-0 z-40 m-0 w-80 h-full pt-8 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 px-3 pb-4 overflow-y-auto">
+        class="fixed top-0 left-0 z-40 m-0 w-80 h-full pt-8 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 px-3 pb-4 overflow-y-auto">
 
         <!-- Header -->
         @if (isset($header))

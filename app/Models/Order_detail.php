@@ -14,10 +14,17 @@ class Order_detail extends Model
 
     protected $fillable = [
         'orderID',
-        'name',
-        'value',
-        'type',
-        'reference',
-        'description',
+        'itemID',
+        'quantity',
+        'comment',
+        'amount',
     ];
+
+    public function order(){
+        return $this->belongsTo(Order::class);
+    }
+
+    public function item(){
+        return $this->hasOne(Item::class, "id", "itemID");
+    }
 }

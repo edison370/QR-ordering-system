@@ -29,4 +29,11 @@ class Item extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function order(){
+        return $this->belongsTo(Order::class);
+    }
+
+    public function item_details(){
+        return $this->hasOne(Item_detail::class, "itemID", "id");
+    }
 }
