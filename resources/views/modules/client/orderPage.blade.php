@@ -8,9 +8,9 @@
 
     <div class="-mt-16 px-8 sm:px-4 lg:px-8 object-center w-full">
         @foreach ($orders as $o)
-            {{ $o }}
-            <div class="mb-7 bg-white p-6 shadow rounded">
-                <div class="flex items-center border-b border-gray-200 pb-4 justify-between">
+      
+            <div class="mb-4 sm:mb-7 bg-white p-3 sm:p-6 shadow rounded">
+                <div class="flex items-center border-b border-gray-200 pb-2 sm:pb-4 justify-between text-sm sm:text-base">
                     <div>{{ $o->created_at }}</div>
                         @switch($o->status)
                             @case('Confirmed')
@@ -25,14 +25,23 @@
 
                     </div>
 
-                    <div class="py-2">
+                    <div class="py-2 text-xs sm:text-sm">
                         @foreach ($o->order_details as $d)
-                            <div class="flex flex-row">
-                                <img class="basis-1/4 max-w-48" src="{{ $d->item->imagePath }}" alt="category image" />
-                                <div class="basis-1/2"><span>{{ $d->item->description }}</span></div>
+                            <div class="flex flex-row mb-2">
+                                <div class="basis-1/4"><img class="object-cover rounded" src="{{ $d->item->imagePath }}" alt="category image" /></div>
+                                <div class="basis-1/2 px-2">
+                                    <div>
+                                        {{ $d->item->description }}
+                                    </div>
+
+                                    <div class="text-gray-400">
+                                        {{ $d->comment }}
+                                    </div>
+
+                                </div>
                                 <div class="basis-1/4 text-right"><span>{{ $d->item->price }}</span></div>
                             </div>
-                            {{ $d }}
+                       
                         @endforeach
                     </div>
                 </div>

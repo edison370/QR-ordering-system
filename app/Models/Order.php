@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Casts\DateFormat;
 
 class Order extends Model
 {
@@ -18,6 +19,11 @@ class Order extends Model
     ];
 
     public function order_details(){
-        return $this->hasMany(Order_detail::class, "itemID", "id");
+        return $this->hasMany(Order_detail::class, "orderID", "id");
     }
+
+    protected $casts = [
+        'created_at' => DateFormat::class,
+    ];
+
 }
