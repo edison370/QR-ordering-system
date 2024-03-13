@@ -27,39 +27,5 @@
     </div>
 @endif
 
-@if (isset($pagination))
-    <!-- Pagination -->
-    {{ $pagination }}
-@endif
-
 {{ $slot }}
 
-<script type="module">
-
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        //pagination 
-        $('#pagination a').click(function(e) {
-            startPageLoading();
-            e.preventDefault();
-            let page = $(this).attr('href').split('page=')[1]
-
-            let url = "{{ $url }}?page=" + page;
-
-            $.ajax({
-                url: url,
-                success: function(res) {
-                    $('#{{ $loadID }}').html(res);
-                    stopPageLoading();
-                }
-            })
-        });
-
-    });
-
-</script>

@@ -1,4 +1,4 @@
-<x-table-report loadID="userReportResult" url="/userReportResult">
+<x-table-report>
     @if (isset($users))
         <x-slot name="grandTotal">
             <x-box>
@@ -73,9 +73,8 @@
             </x-table-content>
         </x-slot>
 
-        <x-slot name="pagination">
-            {!! $users->links() !!}
-        </x-slot>
+        {!! $users->links() !!}
+
 
     @else
         <div class="flex justify-center items-center">
@@ -83,3 +82,33 @@
         </div>
         @endif
 </x-table-report>
+
+<script type="module">
+
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        //pagination
+        $('#pagination a').click(function(e) {
+            startPageLoading();
+            e.preventDefault();
+            let page = $(this).attr('href').split('page=')[1]
+
+            let url = '{{ $requestUrl }}' + "&page=" + page;
+
+            $.ajax({
+                url: url,
+                success: function(res) {
+                    $('#userReportResult').html(res);
+                    stopPageLoading();
+                }
+            })
+        });
+
+    });
+
+</script>
