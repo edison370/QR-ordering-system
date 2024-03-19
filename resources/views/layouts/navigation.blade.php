@@ -20,15 +20,11 @@
                         <x-slot name="trigger">
                             <button
                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ __('Test') }}</div>
+                                <div>{{ __('Reports') }}</div>
                             </button>
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
                             <x-dropdown-link :href="route('userReport')">
                                 {{ __('User Report') }}
                             </x-dropdown-link>
@@ -96,24 +92,6 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link isDropdown="true">
-                <x-slot name="trigger">
-                    <button
-                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                        <div>{{ __('Test') }}</div>
-                    </button>
-                </x-slot>
-
-                <x-slot name="content">
-                    <x-dropdown-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
-                    </x-dropdown-link>
-
-                    <x-dropdown-link :href="route('userReport')">
-                        {{ __('User Report') }}
-                    </x-dropdown-link>
-                </x-slot>
             </x-responsive-nav-link>
         </div>
 

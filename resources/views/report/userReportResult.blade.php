@@ -67,24 +67,25 @@
                         {{ $user->updated_at }}
                     </x-table-data>
                     <x-table-data>
-                        <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                        <button onclick="editBtn({{ $user->id }})"
+                            class="inline-flex items-center justify-center active:scale-95 rounded-lg bg-blue-600 px-8 py-2 font-medium text-sm text-white outline-none focus:ring hover:opacity-90 ">
+                            Edit
+                        </button>
                     </x-table-data>
                 @endforeach
             </x-table-content>
         </x-slot>
 
         {!! $users->links() !!}
-
-
     @else
         <div class="flex justify-center items-center">
-            <img class="object-contain h-96 w-96" src="{{ url('/images/no_results_found.png') }}" alt="No results found" />
+            <img class="object-contain h-96 w-96" src="{{ url('/images/no_results_found.png') }}"
+                alt="No results found" />
         </div>
-        @endif
+    @endif
 </x-table-report>
 
 <script type="module">
-
     $(document).ready(function() {
         $.ajaxSetup({
             headers: {
@@ -110,5 +111,26 @@
         });
 
     });
+</script>
 
+<script>
+    function editBtn(id) {
+        startPageLoading();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let url = "/user/" + id;
+
+        $.ajax({
+            url: url,
+            success: function(res) {
+                $('#editUserModal').html(res);
+                stopPageLoading();
+
+            }
+        })
+    };
 </script>

@@ -29,4 +29,21 @@ class UserController extends Controller
             'users' => $users, 'requestUrl' =>$requestUrl
         ])->render();
     }
+
+    public function updateUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+            'email' => 'required|max:30',
+        ]);
+
+
+        return redirect('/userReport')->with('success', 'Successfully updated!');   ;
+    }
+
+    public function getUser($id, Request $request)
+    {
+        $user = User::findOrFail($id);
+        return view('report.editUserModal', ['user' => $user]);
+    }
 }

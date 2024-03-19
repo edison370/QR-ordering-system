@@ -7,7 +7,25 @@
     </x-slot>
 
     <div class="py-12 px-4 sm:px-2 lg:px-8 object-center">
-        <x-box >
+        @if ($errors->any())
+            <div class="p-4 mb-2 text-sm text-yellow-800 rounded-lg bg-yellow-50">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (\Session::has('success'))
+            <div class="p-4 mb-2 text-sm text-green-800 rounded-lg bg-green-50">
+                <ul>
+                    <li>{!! \Session::get('success') !!}</li>
+                </ul>
+            </div>
+        @endif
+
+        <x-box>
             <x-slot name="header">Filters</x-slot>
 
             <div id="content">
@@ -66,9 +84,30 @@
 
         </x-box>
 
+        <div class="flex justify-end">
+            <button onclick="addBtn()"
+                class="inline-flex items-center justify-center active:scale-95 rounded-lg bg-blue-600 px-6 py-2 font-medium text-sm text-white outline-none focus:ring hover:opacity-90 ">
+                <svg class="w-[18px] h-[18px] text-white mr-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24" fill="none" viewBox="0 1 24 25">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M5 12h14m-7 7V5" />
+                </svg>
+                User
+            </button>
+        </div>
+
         <div id="userReportResult">
             <!-- Show report here-->
         </div>
+
+        <div id="editUserModal">
+            <!-- Show edit user modal here-->
+        </div>
+
+        <div id="addUserModal">
+
+        </div>
+
     </div>
 
 </x-app-layout>
@@ -91,15 +130,15 @@
             $("#searchBtn svg").removeClass("hidden");
             $("#searchBtn").addClass("pointer-events-none");
 
-            let loadID="userReportResult";
+            let loadID = "userReportResult";
 
             let name = $('#content #name').val();
-            let url="/userReportResult?name="+name;
+            let url = "/userReportResult?name=" + name;
 
             $.ajax({
                 url: url,
                 success: function(res) {
-                    $('#'+loadID).html(res);
+                    $('#' + loadID).html(res);
 
                     //After load completed remove loading animation
                     $("#searchBtn svg").addClass("hidden");
@@ -109,7 +148,47 @@
 
         });
 
-
-        
     });
+</script>
+
+<script>
+    function editBtn(id) {
+        startPageLoading();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let url = "/user/" + id;
+
+        $.ajax({
+            url: url,
+            success: function(res) {
+                $('#editUserModal').html(res);
+                stopPageLoading();
+
+            }
+        })
+    };
+
+    function addBtn() {
+        startPageLoading();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        let url = "/user/1";
+
+        $.ajax({
+            url: url,
+            success: function(res) {
+                $('#editUserModal').html(res);
+                stopPageLoading();
+
+            }
+        })
+    };
 </script>

@@ -30,15 +30,20 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    //Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //User Report
     Route::get('/userReport',function () {
         return view('page.userReport');
     })->name('userReport');
-
     Route::get('/userReportResult', [UserController::class, 'getAll'])->name('userReportResult');
+    Route::get('/user/{id}', [UserController::class, 'getUser']);
+    Route::put('/editUser/{id}', [UserController::class, 'updateUser'])->name('adminUpdateUser');
+
+    
 });
 
 require __DIR__.'/auth.php';
