@@ -84,11 +84,11 @@
 
         </x-box>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end m-2">
             <button onclick="addBtn()"
                 class="inline-flex items-center justify-center active:scale-95 rounded-lg bg-blue-600 px-6 py-2 font-medium text-sm text-white outline-none focus:ring hover:opacity-90 ">
                 <svg class="w-[18px] h-[18px] text-white mr-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="24" fill="none" viewBox="0 1 24 25">
+                    width="24" height="24" fill="none" viewBox="0 0 24 25">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M5 12h14m-7 7V5" />
                 </svg>
@@ -96,8 +96,8 @@
             </button>
         </div>
 
-        <div id="userReportResult">
-            <!-- Show report here-->
+        <div id="userListResult">
+            <!-- Show list here-->
         </div>
 
         <div id="editUserModal">
@@ -130,10 +130,10 @@
             $("#searchBtn svg").removeClass("hidden");
             $("#searchBtn").addClass("pointer-events-none");
 
-            let loadID = "userReportResult";
+            let loadID = "userListResult";
 
             let name = $('#content #name').val();
-            let url = "/userReportResult?name=" + name;
+            let url = "/userListResult?name=" + name;
 
             $.ajax({
                 url: url,

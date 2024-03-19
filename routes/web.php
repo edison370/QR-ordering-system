@@ -36,13 +36,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //User Report
-    Route::get('/userReport',function () {
-        return view('page.userReport');
-    })->name('userReport');
-    Route::get('/userReportResult', [UserController::class, 'getAll'])->name('userReportResult');
+    Route::get('/userList',function () {
+        return view('page.userList');
+    })->name('userList');
+    Route::get('/userListResult', [UserController::class, 'getAll'])->name('userListResult');
     Route::get('/user/{id}', [UserController::class, 'getUser']);
     Route::put('/editUser/{id}', [UserController::class, 'updateUser'])->name('adminUpdateUser');
 
+    //Item List
+    Route::get('/itemList',function () {
+        return view('page.itemList');
+    })->name('itemList');
+    Route::get('/itemListResult', [UserController::class, 'getAll'])->name('itemListResult');
+    Route::get('/item/{id}', [UserController::class, 'getItem']);
+    Route::put('/editItem/{id}', [UserController::class, 'updateItem'])->name('updateItem');
+
+    //Order List
+    Route::get('/orderList',function () {
+        return view('page.orderList');
+    })->name('orderList');
+    Route::get('/orderListResult', [UserController::class, 'getAll'])->name('orderListResult');
+    Route::get('/order/{id}', [UserController::class, 'getOrder']);
+    Route::put('/editOrder/{id}', [UserController::class, 'updateOrder'])->name('updateOrder');
     
 });
 

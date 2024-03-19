@@ -4,16 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Item;
-use App\Models\Order;
 
-class OrderController extends Controller
+class ItmeController extends Controller
 {
-    public function getClientOrder(Request $request){
-        $orders = Order::where("status","!=","Paid")->with('order_details.item')->get();
-
-        return view('modules.client.orderPage', ['orders' => $orders])->render(); 
-    }
-
+    /**
+     * Display all users.
+     */
     public function getAll(Request $request)
     {
         $name = $request->name ? : "";
@@ -24,12 +20,12 @@ class OrderController extends Controller
         //remove page request
         $requestUrl = str_replace('&page='.$request->page,'',$_SERVER["REQUEST_URI"]);
 
-        return view('report.UserReportResult', [
+        return view('report.UserReportList', [
             'users' => $users, 'requestUrl' =>$requestUrl
         ])->render();
     }
 
-    public function editOrder(Request $request)
+    public function editItem(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|max:30',
@@ -37,13 +33,12 @@ class OrderController extends Controller
         ]);
 
 
-        return redirect('/userReport')->with('success', 'Successfully updated!');   ;
+        return redirect('/userList')->with('success', 'Successfully updated!');   ;
     }
 
-    public function getOrder($id, Request $request)
+    public function getItem($id, Request $request)
     {
         $user = Item::findOrFail($id);
         return view('report.editUserModal', ['user' => $user]);
     }
-
 }

@@ -104,7 +104,7 @@
             $.ajax({
                 url: url,
                 success: function(res) {
-                    $('#userReportResult').html(res);
+                    $('#userListResult').html(res);
                     stopPageLoading();
                 }
             })

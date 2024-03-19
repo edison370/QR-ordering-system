@@ -25,7 +25,7 @@ class UserController extends Controller
         //remove page request
         $requestUrl = str_replace('&page='.$request->page,'',$_SERVER["REQUEST_URI"]);
 
-        return view('report.UserReportResult', [
+        return view('report.UserListResult', [
             'users' => $users, 'requestUrl' =>$requestUrl
         ])->render();
     }
@@ -38,7 +38,7 @@ class UserController extends Controller
         ]);
 
 
-        return redirect('/userReport')->with('success', 'Successfully updated!');   ;
+        return redirect('/userList')->with('success', 'Successfully updated!');   ;
     }
 
     public function getUser($id, Request $request)
