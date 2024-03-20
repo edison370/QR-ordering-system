@@ -1,6 +1,6 @@
 <x-table-report>
     @if (isset($users))
-        {{-- <x-slot name="grandTotal">
+        <x-slot name="grandTotal">
             <x-box>
                 <x-slot name="header">Summary</x-slot>
                 <dl
@@ -25,7 +25,7 @@
                     </x-summary-description>
                 </dl>
             </x-box>
-        </x-slot> --}}
+        </x-slot>
 
         <x-slot name="tableHeader">
             <x-table-header>
@@ -78,7 +78,8 @@
         {!! $users->links() !!}
     @else
         <div class="flex justify-center items-center">
-            <img class="object-contain h-96 w-96" src="{{ url('/images/no_results_found.png') }}" alt="No results found" />
+            <img class="object-contain h-96 w-96" src="{{ url('/images/no_results_found.png') }}"
+                alt="No results found" />
         </div>
     @endif
 </x-table-report>
@@ -120,7 +121,7 @@
             }
         });
 
-        let url = "/editUser/" + id;
+        let url = "/user/" + id;
 
         $.ajax({
             url: url,

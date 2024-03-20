@@ -1,7 +1,6 @@
 @props([
     'name',
     'show' => false,
-    'method' => "POST",
     'action' => "test",
     'maxWidth' => '2xl',
     'btnName' => 'Submit',
@@ -77,7 +76,7 @@ $maxWidth = [
         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
     >
-    <form class="relative bg-white rounded-lg shadow dark:bg-gray-700" action="{{ $action }}" method="POST">
+    <form class="relative bg-white rounded-lg shadow dark:bg-gray-700" action="{{ $action }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="p-4 md:p-5">
         {{ $slot }}
@@ -85,13 +84,13 @@ $maxWidth = [
 
         <div class="flex justify-between">
             <div @click="show = ! show"
-                class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white bg-gray-400 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 hover:opacity-90">
                 Cancel
             </div>
             
             <button type="submit"
                 x-text="btnName"
-                class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 hover:opacity-90">
             </button>
         </div>
         </div>

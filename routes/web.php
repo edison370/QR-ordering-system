@@ -4,6 +4,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,24 +41,31 @@ Route::middleware('auth')->group(function () {
         return view('page.userList');
     })->name('userList');
     Route::get('/userListResult', [UserController::class, 'getAll'])->name('userListResult');
-    Route::get('/user/{id}', [UserController::class, 'getUser']);
-    Route::put('/editUser/{id}', [UserController::class, 'updateUser'])->name('adminUpdateUser');
+    Route::get('/editUser/{id}', [UserController::class, 'getUser']);
+    Route::put('/user/{id}', [UserController::class, 'updateUser'])->name('adminUpdateUser');
 
     //Item List
     Route::get('/itemList',function () {
         return view('page.itemList');
     })->name('itemList');
-    Route::get('/itemListResult', [UserController::class, 'getAll'])->name('itemListResult');
-    Route::get('/item/{id}', [UserController::class, 'getItem']);
-    Route::put('/editItem/{id}', [UserController::class, 'updateItem'])->name('updateItem');
+    Route::get('/addItem',function () {
+        return view('modals.addItemModal');
+    })->name('addItem');
+    Route::get('/itemListResult', [ItemController::class, 'getAll'])->name('itemListResult');
+    Route::get('/editItem/{id}', [ItemController::class, 'getItem']);
+    Route::put('/item/{id}', [ItemController::class, 'updateItem'])->name('updateItem');
+    Route::post('/item', [ItemController::class, 'createItem'])->name('createItem');
 
     //Order List
     Route::get('/orderList',function () {
         return view('page.orderList');
     })->name('orderList');
-    Route::get('/orderListResult', [UserController::class, 'getAll'])->name('orderListResult');
-    Route::get('/order/{id}', [UserController::class, 'getOrder']);
-    Route::put('/editOrder/{id}', [UserController::class, 'updateOrder'])->name('updateOrder');
+    Route::get('/addOrder',function () {
+        return view('modals.addOrderModal');
+    })->name('addOrder');
+    Route::get('/orderListResult', [OrderController::class, 'getAll'])->name('orderListResult');
+    Route::get('/editOrder/{id}', [OrderController::class, 'getOrder']);
+    Route::put('/order/{id}', [OrderController::class, 'updateOrder'])->name('updateOrder');
     
 });
 

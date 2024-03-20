@@ -7,23 +7,7 @@
     </x-slot>
 
     <div class="py-12 px-4 sm:px-2 lg:px-8 object-center">
-        @if ($errors->any())
-            <div class="p-4 mb-2 text-sm text-yellow-800 rounded-lg bg-yellow-50">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        @if (\Session::has('success'))
-            <div class="p-4 mb-2 text-sm text-green-800 rounded-lg bg-green-50">
-                <ul>
-                    <li>{!! \Session::get('success') !!}</li>
-                </ul>
-            </div>
-        @endif
+        <x-status-message /> {{-- Status Message--}}
 
         <x-box>
             <x-slot name="header">Filters</x-slot>
@@ -85,15 +69,7 @@
         </x-box>
 
         <div class="flex justify-end m-2">
-            <button onclick="addBtn()"
-                class="inline-flex items-center justify-center active:scale-95 rounded-lg bg-blue-600 px-6 py-2 font-medium text-sm text-white outline-none focus:ring hover:opacity-90 ">
-                <svg class="w-[18px] h-[18px] text-white mr-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    width="24" height="24" fill="none" viewBox="0 0 24 25">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M5 12h14m-7 7V5" />
-                </svg>
-                User
-            </button>
+            <x-add-button onclick="addBtn()">User</x-add-button>
         </div>
 
         <div id="userListResult">
@@ -105,7 +81,7 @@
         </div>
 
         <div id="addUserModal">
-
+            <!-- Show add user modal here-->
         </div>
 
     </div>
@@ -160,7 +136,7 @@
             }
         });
 
-        let url = "/user/" + id;
+        let url = "/editUser/" + id;
 
         $.ajax({
             url: url,
@@ -180,7 +156,7 @@
             }
         });
 
-        let url = "/user/1";
+        let url = "/editUser/1";
 
         $.ajax({
             url: url,

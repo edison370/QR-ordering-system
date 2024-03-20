@@ -1,31 +1,5 @@
 <x-table-report>
-    @if (isset($users))
-        {{-- <x-slot name="grandTotal">
-            <x-box>
-                <x-slot name="header">Summary</x-slot>
-                <dl
-                    class="grid max-w-screen-xl grid-cols-2 gap-8 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-6 py-2 sm:py-4">
-                    <x-summary-description>
-                        <x-slot name="value">
-                            RM73,000
-                        </x-slot>
-                        Cost
-                    </x-summary-description>
-                    <x-summary-description>
-                        <x-slot name="value">
-                            RM73,000
-                        </x-slot>
-                        Cost
-                    </x-summary-description>
-                    <x-summary-description>
-                        <x-slot name="value">
-                            RM73,000
-                        </x-slot>
-                        Cost
-                    </x-summary-description>
-                </dl>
-            </x-box>
-        </x-slot> --}}
+    @if (isset($items))
 
         <x-slot name="tableHeader">
             <x-table-header>
@@ -35,7 +9,10 @@
                 Name
             </x-table-header>
             <x-table-header>
-                Email
+                Description
+            </x-table-header>
+            <x-table-header>
+                Price (RM)
             </x-table-header>
             <x-table-header>
                 Created at
@@ -50,37 +27,42 @@
 
         <x-slot name="tableData">
 
-            @foreach ($users as $user)
+            @foreach ($items as $item)
                 <x-table-content>
                     <x-table-data>
                         {{ $loop->iteration }}
                     </x-table-data>
                     <x-table-data>
-                        {{ $user->name }}
+                        {{ $item->name }}
                     </x-table-data>
                     <x-table-data>
-                        {{ $user->email }}
+                        {{ $item->description }}
                     </x-table-data>
                     <x-table-data>
-                        {{ $user->created_at }}
+                        {{ $item->price }}
                     </x-table-data>
                     <x-table-data>
-                        {{ $user->updated_at }}
+                        {{ $item->created_at }}
                     </x-table-data>
                     <x-table-data>
-                        <x-edit-button onclick="editBtn({{ $user->id }})" />
+                        {{ $item->updated_at }}
+                    </x-table-data>
+                    <x-table-data>
+                        <x-edit-button onclick="editBtn({{ $item->id }})" />
                     </x-table-data>
                 </x-table-content>
             @endforeach
 
         </x-slot>
 
-        {!! $users->links() !!}
+        {!! $items->links() !!}
     @else
         <div class="flex justify-center items-center">
-            <img class="object-contain h-96 w-96" src="{{ url('/images/no_results_found.png') }}" alt="No results found" />
+            <img class="object-contain h-96 w-96" src="{{ url('/images/no_results_found.png') }}"
+                alt="No results found" />
         </div>
     @endif
+
 </x-table-report>
 
 <script type="module">
@@ -102,7 +84,7 @@
             $.ajax({
                 url: url,
                 success: function(res) {
-                    $('#userListResult').html(res);
+                    $('#itemListResult').html(res);
                     stopPageLoading();
                 }
             })
@@ -120,15 +102,16 @@
             }
         });
 
-        let url = "/editUser/" + id;
+        let url = "/editItem/" + id;
 
         $.ajax({
             url: url,
             success: function(res) {
-                $('#editUserModal').html(res);
+                $('#editItemModal').html(res);
                 stopPageLoading();
 
             }
         })
     };
+
 </script>

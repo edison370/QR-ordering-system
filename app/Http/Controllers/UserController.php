@@ -20,7 +20,7 @@ class UserController extends Controller
         $name = $request->name ? : "";
         //$offer = ($request->offer !== null ? $request->offer : 0) ;
 
-        $users = User::where('name', 'LIKE', "%".$name."%")->paginate(1);
+        $users = User::where('name', 'LIKE', "%".$name."%")->paginate(2);
 
         //remove page request
         $requestUrl = str_replace('&page='.$request->page,'',$_SERVER["REQUEST_URI"]);
@@ -44,6 +44,6 @@ class UserController extends Controller
     public function getUser($id, Request $request)
     {
         $user = User::findOrFail($id);
-        return view('report.editUserModal', ['user' => $user]);
+        return view('modals.editUserModal', ['user' => $user]);
     }
 }

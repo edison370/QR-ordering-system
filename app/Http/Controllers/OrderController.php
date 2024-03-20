@@ -19,31 +19,30 @@ class OrderController extends Controller
         $name = $request->name ? : "";
         //$offer = ($request->offer !== null ? $request->offer : 0) ;
 
-        $users = Item::where('name', 'LIKE', "%".$name."%")->paginate(1);
+        $orders = Order::paginate(10);
 
         //remove page request
         $requestUrl = str_replace('&page='.$request->page,'',$_SERVER["REQUEST_URI"]);
 
-        return view('report.UserReportResult', [
-            'users' => $users, 'requestUrl' =>$requestUrl
+        return view('report.orderListResult', [
+            'orders' => $orders, 'requestUrl' =>$requestUrl
         ])->render();
     }
 
-    public function editOrder(Request $request)
+    public function updateOrder(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|max:30',
             'email' => 'required|max:30',
         ]);
 
-
-        return redirect('/userReport')->with('success', 'Successfully updated!');   ;
+        return redirect('/orderList')->with('success', 'Successfully updated!');   ;
     }
 
     public function getOrder($id, Request $request)
     {
-        $user = Item::findOrFail($id);
-        return view('report.editUserModal', ['user' => $user]);
+        $item = Item::findOrFail($id);
+        return view('modals.editOrderModal', ['item' => $item]);
     }
 
 }

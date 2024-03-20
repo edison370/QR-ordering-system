@@ -5,40 +5,50 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 
-class ItmeController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display all users.
      */
     public function getAll(Request $request)
     {
-        $name = $request->name ? : "";
-        //$offer = ($request->offer !== null ? $request->offer : 0) ;
-
-        $users = Item::where('name', 'LIKE', "%".$name."%")->paginate(1);
+        $items = Item::paginate(20);
 
         //remove page request
         $requestUrl = str_replace('&page='.$request->page,'',$_SERVER["REQUEST_URI"]);
 
-        return view('report.UserReportList', [
-            'users' => $users, 'requestUrl' =>$requestUrl
+        return view('report.itemListResult', [
+            'items' => $items, 'requestUrl' =>$requestUrl
         ])->render();
     }
 
-    public function editItem(Request $request)
+    public function updateItem(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|max:30',
-            'email' => 'required|max:30',
         ]);
 
 
-        return redirect('/userList')->with('success', 'Successfully updated!');   ;
+        return redirect('/itemList')->with('success', 'Successfully updated!');
+    }
+
+    public function createItem(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $request->image->move(public_path('upload'), $imageName);
+
+        return redirect('/itemList')->with('success', 'Successfully added!');
     }
 
     public function getItem($id, Request $request)
     {
-        $user = Item::findOrFail($id);
-        return view('report.editUserModal', ['user' => $user]);
+        $item = Item::findOrFail($id);
+        return view('modals.editItemModal', ['item' => $item]);
     }
 }
