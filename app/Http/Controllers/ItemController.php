@@ -7,9 +7,7 @@ use App\Models\Item;
 
 class ItemController extends Controller
 {
-    /**
-     * Display all users.
-     */
+
     public function getAll(Request $request)
     {
         $items = Item::paginate(20);

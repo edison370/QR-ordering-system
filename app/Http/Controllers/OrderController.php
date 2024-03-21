@@ -9,7 +9,7 @@ use App\Models\Order;
 class OrderController extends Controller
 {
     public function getClientOrder(Request $request){
-        $orders = Order::where("status","!=","Paid")->with('order_details.item')->get();
+        $orders = Order::where("status","!=","Paid")->with('order_details.order')->get();
 
         return view('modules.client.orderPage', ['orders' => $orders])->render(); 
     }
@@ -32,17 +32,26 @@ class OrderController extends Controller
     public function updateOrder(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:30',
-            'email' => 'required|max:30',
+
         ]);
 
         return redirect('/orderList')->with('success', 'Successfully updated!');   ;
     }
 
+    public function createorder(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+
+        ]);
+
+        return redirect('/orderList')->with('success', 'Successfully added!');
+    }
+
     public function getOrder($id, Request $request)
     {
-        $item = Item::findOrFail($id);
-        return view('modals.editOrderModal', ['item' => $item]);
+        $order = order::findOrFail($id);
+        return view('modals.editOrderModal', ['order' => $order]);
     }
 
 }

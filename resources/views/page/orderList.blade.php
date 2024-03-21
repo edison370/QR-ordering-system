@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="flex font-semibold text-xl text-gray-500 leading-tight">
-            {{ __('Orders') }}
+            {{ __('order List') }}
         </h2>
     </x-slot>
 
@@ -10,21 +10,21 @@
         <x-status-message /> {{-- Status Message--}}
 
         <div class="flex justify-end m-2">
-            <x-add-button onclick="addBtn()">Order</x-add-button>
+            <x-add-button onclick="addBtn()">order</x-add-button>
         </div>
 
-        <div id="userListResult">
+        <div id="orderListResult">
             <!-- Show list here-->
         </div>
 
-        <div id="editUserModal">
+        <div id="editOrderModal">
             <!-- Show edit order modal here-->
         </div>
 
         <div id="addOrderModal">
-            <!-- Show add order modal here-->
+            <!-- Show edit order modal here-->
         </div>
-
+        
     </div>
 
 </x-app-layout>
@@ -38,32 +38,22 @@
             }
         });
 
-        $('#resetBtn').click(function() {
-            // Reset all input fields value
-            $('#content input').val('');
-        });
+        startPageLoading();
 
-        $('#searchBtn').unbind().click(function() {
-            $("#searchBtn svg").removeClass("hidden");
-            $("#searchBtn").addClass("pointer-events-none");
+        let loadID = "orderListResult";
 
-            let loadID = "userListResult";
+        let name = $('#content #name').val();
+        let url = "/orderListResult?name=" + name;
 
-            let name = $('#content #name').val();
-            let url = "/userListResult?name=" + name;
+        $.ajax({
+            url: url,
+            success: function(res) {
+                $('#' + loadID).html(res);
 
-            $.ajax({
-                url: url,
-                success: function(res) {
-                    $('#' + loadID).html(res);
+                stopPageLoading();
+            }
+        })
 
-                    //After load completed remove loading animation
-                    $("#searchBtn svg").addClass("hidden");
-                    $("#searchBtn").removeClass("pointer-events-none");
-                }
-            })
-
-        });
 
     });
 </script>
@@ -77,7 +67,7 @@
             }
         });
 
-        let url = "/user/" + id;
+        let url = "/order/" + id;
 
         $.ajax({
             url: url,
@@ -97,7 +87,7 @@
             }
         });
 
-        let url = "/addItem";
+        let url = "/addOrder";
 
         $.ajax({
             url: url,
