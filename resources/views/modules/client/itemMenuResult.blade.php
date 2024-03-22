@@ -4,6 +4,7 @@
         <div x-data="{
             open: false,
             count: 0,
+            remark: '',
             focusables() {
                 // All focusable element types...
                 let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
@@ -79,8 +80,9 @@
                         <!-- Modal body -->
                         <div class="p-4 md:p-5">
                             <div class="text-center">{{ $i->name }}</div>
+                            <div class="text-left text-xs text-gray-600">{{ $i->description }}</div>
                             <div class="grid gap-4 mb-4 grid-cols-2">
-                                <div class="col-span-2">
+                                {{-- <div class="col-span-2">
                                     <label for="name"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
                                     <input type="text" name="name" id="name"
@@ -105,11 +107,11 @@
                                         <option value="GA">Gaming/Console</option>
                                         <option value="PH">Phones</option>
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="col-span-2">
-                                    <label for="description"
+                                    <label for="remark{{$i->id}}"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks</label>
-                                    <textarea id="description" rows="4"
+                                    <textarea id="remark{{$i->id}}" rows="4" x-model="remark"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Write remark here"></textarea>
                                 </div>
@@ -117,30 +119,31 @@
 
                             <div class="flex justify-between">
                                 <div class="flex items-center">
-                                    <button x-on:click="count = count > 0 ? count-1 : count"
-                                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="button" x-on:click="count = count > 0 ? count-1 : count"
+                                        class="text-white inline-flex items-center bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none font-medium rounded-full text-sm p-2 text-center hover:opacity-90 focus:ring-gray-300">
                                         <svg class="w-[16px] h-[16px] text-white" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2" d="M5 12h14" />
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="M5 12h14" />
                                         </svg>
                                     </button>
 
                                     <span x-text="count" class="m-4"></span>
-                                    <button x-on:click="count++"
-                                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <button type="button" x-on:click="count++"
+                                        class="text-white inline-flex items-center bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none font-medium rounded-full text-sm p-2 text-center hover:opacity-90 focus:ring-gray-300">
                                         <svg class="w-[16px] h-[16px] text-white" aria-hidden="true"
                                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2" d="M5 12h14m-7 7V5" />
                                         </svg>
                                     </button>
                                 </div>
-                                <button type="submit" 
-                                x-bind:disabled= "count < 1 ? true : false"
-                                :class= "count < 1 ? 'bg-gray-300 cursor-not-allowed opacity-50'
-                                : 'text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'"
-                                    class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center ">    
+                                <button type="submit" x-on:click = "open = false"
+                                    x-bind:disabled="count < 1 ? true : false"
+                                    :class="count < 1 ? 'bg-gray-300 cursor-not-allowed opacity-50' :
+                                        'text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none hover:opacity-90 focus:ring-gray-300'"
+                                    class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                                    @click="addToCart({{ $i->id }},count)">
                                     Add to Cart
                                 </button>
                             </div>
@@ -154,3 +157,28 @@
         </div>
     @endforeach
 </div>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
+    function addToCart(id, count) {
+        $.ajax({
+            url: "/addToCart",
+            success: function(res) {
+                $.ajax({
+                    url: "/CartView",
+                    success: function(res) {
+                        $('#cartView').html(res);
+
+                    }
+                })
+            }
+        })
+
+    };
+</script>

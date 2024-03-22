@@ -49,4 +49,19 @@ class ItemController extends Controller
         $item = Item::findOrFail($id);
         return view('modals.editItemModal', ['item' => $item]);
     }
+
+    public function addToCart(Request $request){
+        if($request->hasCookie('item_data')){
+           $itemData = unserialize($request->cookie('item_data'));
+           $newItem = ['name' => 'John Doe', 'email' => 'john@example.com'];
+           array_push($itemData,$newItem);
+        }else{
+            $itemData[] = ['name' => 'John Doe', 'email' => 'john@example.com'];
+        }
+
+        $cookie = cookie('item_data', serialize($itemData));
+
+        return response("Successfully added item into cart")->cookie($cookie);
+    }
+
 }

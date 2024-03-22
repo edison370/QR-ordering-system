@@ -22,8 +22,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [MenuController::class, 'homeCategory'])->name('client.home');
 
 Route::get('/Category/{name}', [MenuController::class, 'getCategoryItems'])->name('client.itemResult');
-
 Route::get('/OrderHistory', [OrderController::class, 'getClientOrder'])->name('client.orderHistory');
+Route::get('/addToCart', [ItemController::class, 'addToCart'])->name('client.addToCart');
+
+Route::get('/CartView', function () {
+    return view('modules.client.cartView');
+})->name('client.cartView');
 
 //authentication view
 Route::get('/dashboard', function () {

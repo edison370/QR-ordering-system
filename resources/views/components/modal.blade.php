@@ -83,10 +83,10 @@ $maxWidth = [
 
 
         <div class="flex justify-between">
-            <div @click="show = ! show"
+            <button @click="show = ! show" type="button"
                 class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center text-white bg-gray-400 hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-200 hover:opacity-90">
                 Cancel
-            </div>
+            </button>
             
             <button type="submit"
                 x-text="btnName"
