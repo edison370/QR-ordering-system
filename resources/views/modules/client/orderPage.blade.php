@@ -31,7 +31,7 @@
                                 <div class="basis-1/4"><img class="object-cover rounded" src="{{ $d->item->imagePath }}" alt="category image" /></div>
                                 <div class="basis-1/2 px-2">
                                     <div>
-                                        {{ $d->item->description }}
+                                        {{ $d->item->name }}
                                     </div>
 
                                     <div class="text-gray-400">
@@ -39,7 +39,7 @@
                                     </div>
 
                                 </div>
-                                <div class="basis-1/4 text-right"><span>{{ $d->item->price }}</span></div>
+                                <div class="basis-1/4 text-right"><span>RM{{ $d->item->price }}</span></div>
                             </div>
                        
                         @endforeach
