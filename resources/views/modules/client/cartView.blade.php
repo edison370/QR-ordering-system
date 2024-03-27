@@ -35,7 +35,7 @@
         })" x-on:keydown.escape.window="open = false"
             x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
             x-on:keydown.shift.tab.prevent="prevFocusable().focus()" x-show="open"
-            class="fixed w-full h-full top-0 left-0 flex items-center justify-center"
+            class="fixed w-full h-full top-0 left-0 flex items-center justify-center z-50"
             style="display: open ? 'block' : 'none'">
 
             <div x-show="open" class="fixed inset-0 transform transition-all" x-on:click="open = false"
@@ -47,8 +47,6 @@
 
 
             <div x-show="open" class="fixed w-full h-full z-50 overflow-y-auto ">
-
-
 
                 <div class="cursor-pointer flex flex-col items-center mt-4 pb-2 text-black text-sm z-50 border-b-2">
                     <div class="fixed top-4 left-5" @click="open = false">
@@ -93,12 +91,12 @@
                         </div>
 
                         <span class="text-center w-1/5 font-semibold text-sm">RM400.00</span>
-                        <span class="text-center w-1/5 font-semibold text-sm">RM00.00</span>
+                        <span class="text-center w-1/5 font-semibold text-sm">RM400.00</span>
                     </div>
-
                 </div>
 
             </div>
+
         </div>
 
     </div>

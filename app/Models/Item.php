@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Casts\AmountNumber;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Casts\DateFormat;
 
 class Item extends Model
 {
@@ -22,6 +23,8 @@ class Item extends Model
 
     protected $casts = [
         'price' => AmountNumber::class,
+        'created_at' => DateFormat::class,
+        'updated_at' => DateFormat::class,
     ];
 
     public function category()

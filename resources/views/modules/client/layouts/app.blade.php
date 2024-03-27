@@ -21,7 +21,7 @@
 <body class="font-sans antialiased">
     <div id="body">
         <div class="min-h-screen bg-gray-100">
-            <div class="fixed w-full start-0">
+            <div class="fixed w-full start-0 z-10">
                 @include('modules.client.layouts.navigation')
 
                 <!-- Page Heading -->

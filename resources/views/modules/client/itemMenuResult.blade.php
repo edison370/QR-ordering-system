@@ -30,7 +30,6 @@
                     <h5 class="text-xl font-semibold tracking-tight text-gray-900 text-center">{{ $i->name }}</h5>
                     <h4 class="text-xl font-semibold tracking-tight text-gray-900 text-right">{{ $i->price }}</h4>
                 </div>
-
             </div>
 
             <div x-init="$watch('open', value => {
