@@ -72,7 +72,7 @@ class ItemController extends Controller
             'name' => 'required|max:30',
             'description' => 'required|max:80',
             'image' => 'mimes:jpeg,jpg,png|required|max:10000',
-            'price' => 'required|numeric|between:1,99999999999999',
+            'price' => 'required|numeric|between:0.1,99999999999999',
             'category' => 'required',
         ]);
 
@@ -107,16 +107,62 @@ class ItemController extends Controller
 
     public function addToCart(Request $request)
     {
+        try {
+            $newItem["quantity"] = $request->count;
+            $newItem["id"] = $request->id;
+        } catch (Exception $ex) {
+            return back()->withErrors('Item not found');
+        }
+
         if ($request->hasCookie('item_data')) {
             $itemData = unserialize($request->cookie('item_data'));
-            $newItem = ['name' => 'John Doe', 'email' => 'john@example.com'];
             array_push($itemData, $newItem);
         } else {
-            $itemData[] = ['name' => 'John Doe', 'email' => 'john@example.com'];
+            $itemData[] = $newItem;
         }
 
         $cookie = cookie('item_data', serialize($itemData));
 
         return response("Successfully added item into cart")->cookie($cookie);
+    }
+
+    public function getCartItems(Request $request)
+    {
+        $itemData = unserialize($request->cookie('item_data'));
+
+        if($itemData){
+            foreach($itemData as $item){
+                $temp = Item::find($item["id"])->getRawOriginal();
+                $temp["totalPrice"] = number_format($item["quantity"] * floatval($temp["price"]), 2, '.', ',');
+                $temp["quantity"] = $item["quantity"];
+                $itemList[] = $temp;
+            }
+        }else{
+            $itemList = null;
+        }
+
+        return view('modules.client.cartView',['items'=>$itemList]);
+    }
+
+    public function changeCartQuantity(Request $request){
+        $itemData = unserialize($request->cookie('item_data'));
+
+        $price = $itemData[$request->row]["totalPrice"] / $itemData[$request->row]["quantity"];
+
+        if($request->action == "add"){
+            $itemData[$request->row]["quantity"] += 1;
+        }else{
+            $itemData[$request->row]["quantity"] -= 1;
+        }
+
+        $itemData[$request->row]["totalPrice"] = $price * $itemData[$request->row]["quantity"];
+
+        if($itemData[$request->row]["quantity"] == 0){
+            unset($itemData[$request->row]);
+        }
+
+        $cookie = cookie('item_data', serialize($itemData));
+        
+        return response()->cookie($cookie);
     }
 }

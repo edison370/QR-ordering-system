@@ -167,7 +167,12 @@
 
     function addToCart(id, count) {
         $.ajax({
+            type: "POST",
             url: "/addToCart",
+            data: {
+                id: id,
+                count: count,
+            },
             success: function(res) {
                 $.ajax({
                     url: "/CartView",

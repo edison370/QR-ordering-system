@@ -24,6 +24,7 @@ class Order extends Model
 
     protected $casts = [
         'created_at' => DateFormat::class,
+        'updated_at' => DateFormat::class,
     ];
 
 }
