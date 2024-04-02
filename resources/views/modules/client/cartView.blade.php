@@ -61,39 +61,7 @@
                 </div>
 
                 <!-- Add margin if you want to see grey behind the modal-->
-                <div class="container mx-auto h-auto text-left p-4">
-                    @if (Cookie::has('item_data'))
-                        @foreach ($items as $row => $item)
-                            <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-                                <div class="flex justify-center w-1/5">
-                                    <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512" @click="changeCartQuantity({{$row}},'minus')">
-                                        <path
-                                            d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                                    </svg>
-
-                                    <input id="quantityRow{{$row}}" 
-                                    class="mx-2 border text-center w-10" type="text"
-                                        value="{{ $item['quantity'] }}">
-
-                                    <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512" @click="changeCartQuantity({{$row}},'add')">
-                                        <path
-                                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                                    </svg>
-                                </div>
-
-                                <div class="flex w-2/5"> <!-- product -->
-                                    <div class="w-20">
-                                        <img class="h-24" src="{{ $item['imagePath'] }}" alt="">
-                                    </div>
-                                    <div class="flex flex-col justify-center ml-4 flex-grow">
-                                        <span class="text-gray-500 text-xs">{{ $item['name'] }}</span>
-                                    </div>
-                                </div>
-
-                                <span class="text-center w-1/5 font-semibold text-sm">RM{{ $item['totalPrice'] }}</span>
-                            </div>
-                        @endforeach
-                    @endif
+                <div id="cartContainer" class="container mx-auto h-auto text-left p-4">
 
                 </div>
 
@@ -115,6 +83,7 @@
         }
     });
 
+    getCartItems();
 
     function changeCartQuantity(row, action) {
         $.ajax({
@@ -125,11 +94,58 @@
                 action: action,
             },
             success: function(res) {
-                //$("#quantityRow"+row).val(res);
-                console.log(res)
+                getCartItems();
             }
         })
 
     };
+
+    function getCartItems() {
+        $.ajax({
+            url: "/getCartItem",
+            success: function(res) {
+                $("#cartContainer").empty();
+
+                $.each(res, function(index, value) {
+                    var item =
+                        `
+                            <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+                                <div class="flex justify-center w-1/5">
+                                    <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512" @click="changeCartQuantity(` +
+                                        index + `,'minus')">
+                                        <path
+                                            d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                                    </svg>
+
+                                    <input
+                                    class="mx-2 border text-center w-10" type="text"
+                                        value="` + value["quantity"] + `" readonly/>
+
+                                    <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512" @click="changeCartQuantity(` + index + `,'add')">
+                                        <path
+                                            d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                                    </svg>
+                                </div>
+
+                                <div class="flex w-2/5"> <!-- product -->
+                                    <div class="w-20">
+                                        <img class="h-24" src="` + value["imagePath"] + `" alt="">
+                                    </div>
+                                    <div class="flex flex-col justify-center ml-4 flex-grow">
+                                        <span class="text-gray-500 text-xs">123</span>
+                                    </div>
+                                </div>
+
+                                <span class="text-center w-1/5 font-semibold text-sm">RM` + value["price"] + `</span>
+                            </div>
+                        `;
+
+                    $("#cartContainer").append(item);
+
+                });
+
+            }
+        })
+    }
 
 </script>

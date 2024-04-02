@@ -132,7 +132,8 @@ class ItemController extends Controller
 
         if($itemData){
             foreach($itemData as $item){
-                $temp = Item::find($item["id"])->getRawOriginal();
+                $temp = Item::find($item["id"])->getOriginal();
+
                 $temp["totalPrice"] = number_format($item["quantity"] * floatval($temp["price"]), 2, '.', ',');
                 $temp["quantity"] = $item["quantity"];
                 $itemList[] = $temp;
@@ -141,28 +142,25 @@ class ItemController extends Controller
             $itemList = null;
         }
 
-        return view('modules.client.cartView',['items'=>$itemList]);
+        return response()->json($itemList);
     }
 
     public function changeCartQuantity(Request $request){
         $itemData = unserialize($request->cookie('item_data'));
 
-        $price = $itemData[$request->row]["totalPrice"] / $itemData[$request->row]["quantity"];
-
         if($request->action == "add"){
             $itemData[$request->row]["quantity"] += 1;
-        }else{
+        } else {
             $itemData[$request->row]["quantity"] -= 1;
         }
 
-        $itemData[$request->row]["totalPrice"] = $price * $itemData[$request->row]["quantity"];
-
         if($itemData[$request->row]["quantity"] == 0){
-            unset($itemData[$request->row]);
+            //unset($itemData[$request->row]);
+            array_splice($itemData, $request->row, 1);
         }
 
         $cookie = cookie('item_data', serialize($itemData));
         
-        return response()->cookie($cookie);
+        return response("Quantity changed!")->cookie($cookie);
     }
 }

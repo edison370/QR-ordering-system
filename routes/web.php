@@ -24,9 +24,13 @@ Route::get('/', [MenuController::class, 'homeCategory'])->name('client.home');
 Route::get('/Category/{name}', [MenuController::class, 'getCategoryItems'])->name('client.itemResult');
 Route::get('/OrderHistory', [OrderController::class, 'getClientOrder'])->name('client.orderHistory');
 Route::post('/addToCart', [ItemController::class, 'addToCart'])->name('client.addToCart');
-Route::get('/CartView', [ItemController::class, 'getCartItems'])->name('client.cartView');
 
-Route::post('/changeCartQuantity', [ItemController::class, 'changeCartQuantity'])->name('client.cartView');
+Route::get('/CartView',function () {
+    return view('modules.client.cartView');
+})->name('client.cartView');
+
+Route::get('/getCartItem', [ItemController::class, 'getCartItems'])->name('getCartItem');
+Route::post('/changeCartQuantity', [ItemController::class, 'changeCartQuantity'])->name('changeCartQuantity');
 
 //authentication view
 Route::get('/dashboard', function () {
