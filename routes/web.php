@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,6 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/editOrder/{id}', [OrderController::class, 'getOrder']);
     Route::put('/order/{id}', [OrderController::class, 'updateOrder'])->name('updateOrder');
     Route::post('/order', [OrderController::class, 'createOrder'])->name('createOrder');
+
+    //Category
+    Route::get('/getAllCategory', [CategoryController::class, 'getAllCategory'])->name('getAllCategory');
 
 });
 

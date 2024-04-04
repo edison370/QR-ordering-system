@@ -23,7 +23,9 @@
 
             <div @click="open = !open">
                 @if ($i->imagePath)
-                    <img class="rounded-t-lg mx-auto w-full" src="{{ $i->imagePath }}" alt="category image" />
+                    <div class="h-auto sm:h-64 flex items-center justify-center">
+                        <img class="m-auto w-full" src="{{ $i->imagePath }}" alt="image" />
+                    </div>
                 @endif
 
                 <div class="px-5 py-5">
@@ -73,7 +75,7 @@
                         </div>
 
                         <div class="flex items-center justify-between border-b rounded-t dark:border-gray-600">
-                            <img class="mx-auto w-full" src="{{ $i->imagePath }}" alt="category image" />
+                            <img class="mx-auto w-full" src="{{ $i->imagePath }}" alt="image" />
                         </div>
 
                         <!-- Modal body -->
@@ -108,9 +110,9 @@
                                     </select>
                                 </div> --}}
                                 <div class="col-span-2">
-                                    <label for="remark{{$i->id}}"
+                                    <label for="remark{{ $i->id }}"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks</label>
-                                    <textarea id="remark{{$i->id}}" rows="4" x-model="remark"
+                                    <textarea id="remark{{ $i->id }}" rows="4" x-model="remark"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Write remark here"></textarea>
                                 </div>

@@ -101,7 +101,7 @@ class ItemController extends Controller
 
     public function getItem($id, Request $request)
     {
-        $item = Item::findOrFail($id);
+        $item = Item::find($id);
         return view('modals.editItemModal', ['item' => $item]);
     }
 
