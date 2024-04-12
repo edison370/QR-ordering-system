@@ -31,13 +31,17 @@
             </select>
         </div>
 
-        <div class="col-span-2">
+        <div class="col-span-3">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">Item
                 picture</label>
+
             <input
                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none"
-                type="file" name="image" id="image" required  accept=".png, .jpg, .jpeg"/>
+                type="file" name="image" id="image" required accept=".png, .jpg, .jpeg" />
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="image_help">PNG, JPG or JPEG (MAX 10MB).</p>
+
+            <img id='preview_img' class="rounded-lg w-full"/>
+
         </div>
 
     </div>
@@ -67,6 +71,19 @@
 
             }
         })
+
+        $('#image').change(function(event) {
+            var input = event.target;
+            var file = input.files[0];
+            var type = file.type;
+
+            var output = document.getElementById('preview_img');
+
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src) 
+            }
+        });
 
     });
 </script>
