@@ -6,26 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Casts\DateFormat;
 
-class Order extends Model
+class Table extends Model
 {
     use HasFactory;
 
-    protected $table = 'orders';
+    protected $table = 'tables';
 
     protected $fillable = [
-        'tableID',
-        'amount',
-        'status',
+        'code',
+        'description',
+        'isActive',
     ];
 
-    public function order_details(){
-        return $this->hasMany(Order_detail::class, "orderID", "id");
+    public function orders(){
+        return $this->hasMany(Order::class, "tableID", "id");
     }
 
-    public function table(){
-        return $this->belongsTo(Table::class);
-    }
-    
     protected $casts = [
         'created_at' => DateFormat::class,
         'updated_at' => DateFormat::class,

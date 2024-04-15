@@ -13,9 +13,7 @@ class MenuController extends Controller
 
         $categories = Category::all();
 
-
         return view('modules.client.home', ['categories' => $categories]);
-
     }
 
     public function getCategoryItems($name, Request $request){
@@ -25,5 +23,5 @@ class MenuController extends Controller
         return view('modules.client.itemMenuResult', ['items' => $items])->render();   
     }
 
-    
+
 }

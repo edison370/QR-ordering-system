@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\TableController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,18 @@ Route::middleware('auth')->group(function () {
 
     //Category
     Route::get('/getAllCategory', [CategoryController::class, 'getAllCategory'])->name('getAllCategory');
+
+    //Table
+    Route::get('/tableList',function () {
+        return view('page.tableList');
+    })->name('tableList');
+    Route::get('/addTable',function () {
+        return view('modals.addTableModal');
+    })->name('addTable');
+    Route::get('/tableListResult', [TableController::class, 'getAll'])->name('tableListResult');
+    Route::get('/editTable/{id}', [TableController::class, 'getTable']);
+    Route::put('/table/{id}', [TableController::class, 'updateTable'])->name('updateTable');
+    Route::post('/table', [TableController::class, 'createTable'])->name('createTable');
 
 });
 
