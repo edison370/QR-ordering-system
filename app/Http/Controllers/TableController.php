@@ -31,9 +31,11 @@ class TableController extends Controller
 
         $validated = $request->validate([
             'description' => 'required|max:80',
+            'isActive' => 'integer|between:0,1',
         ]);
 
         $table->description = $request->description;
+        $table->isActive = $request->isActive;
         $table->save();
 
         return redirect('/tableList')->with('success', 'Successfully updated!');

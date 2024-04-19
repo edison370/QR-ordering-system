@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 //public view
 Route::get('/', [MenuController::class, 'homeCategory'])->name('client.home');
+Route::get('/home', [MenuController::class, 'homeCategory'])->name('client.home');
 
 Route::get('/Category/{name}', [MenuController::class, 'getCategoryItems'])->name('client.itemResult');
 Route::get('/OrderHistory', [OrderController::class, 'getClientOrder'])->name('client.orderHistory');

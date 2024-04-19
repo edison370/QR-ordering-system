@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\Table;
+
+use Exception;
 
 class MenuController extends Controller
 {
@@ -13,7 +16,17 @@ class MenuController extends Controller
 
         $categories = Category::all();
 
-        return view('modules.client.home', ['categories' => $categories]);
+        if($request->table){
+
+            $table = Table::where("code",$request->table)->first();
+
+            if(!$table){
+                //return response('Table not found');
+                abort(404);
+            }
+        }
+
+        return view('modules.client.home', ['categories' => $categories, 'table'=>$request->table]);
     }
 
     public function getCategoryItems($name, Request $request){

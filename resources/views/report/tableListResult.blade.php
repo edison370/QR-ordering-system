@@ -1,5 +1,5 @@
 <x-table-report>
-    
+
     @if (isset($tables))
 
         <x-slot name="tableHeader">
@@ -35,23 +35,23 @@
                     </x-table-data>
                     <x-table-data>
 
-                        <div class="relative max-w-2xl mx-auto mt-24">
-                            <div class="bg-gray-900 text-white p-4 rounded-md">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span id="code" class="text-gray-400">{{ route('client.home') }}/{{ $table->code }}</span>
-                                    <button class="code bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 rounded-md" data-clipboard-target="#code">
-                                Copy
-                              </button>
-                                </div>
+                        <div class="relative max-w-2xl mx-auto">
+                            <div class="flex justify-between items-center">
+                                <span id="code{{ $loop->iteration }}"
+                                    class="text-gray-400">{{ route('client.home') }}?table={{ $table->code }}</span>
+                                <button class="code bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 rounded-md"
+                                    data-clipboard-target="#code{{ $loop->iteration }}">
+                                    Copy
+                                </button>
                             </div>
                         </div>
-                        
+
                     </x-table-data>
                     <x-table-data>
                         {{ $table->description }}
                     </x-table-data>
                     <x-table-data>
-                        @if($table->isActive)
+                        @if ($table->isActive)
                             Yes
                         @else
                             No
@@ -107,11 +107,9 @@
         });
 
     });
-
 </script>
 
 <script>
-
     function editBtn(id) {
         startPageLoading();
         $.ajaxSetup({
