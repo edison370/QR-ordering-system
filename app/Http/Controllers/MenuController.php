@@ -24,6 +24,8 @@ class MenuController extends Controller
                 //return response('Table not found');
                 abort(404);
             }
+
+            $request->session()->put('table', $table->description);
         }
 
         return view('modules.client.home', ['categories' => $categories, 'table'=>$request->table]);

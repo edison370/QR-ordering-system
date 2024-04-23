@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/userListResult', [UserController::class, 'getAll'])->name('userListResult');
     Route::get('/editUser/{id}', [UserController::class, 'getUser']);
     Route::put('/user/{id}', [UserController::class, 'updateUser'])->name('adminUpdateUser');
+    Route::get('users/export/', [UserController::class, 'export'])->name('userListExport');
 
     //Item List
     Route::get('/itemList',function () {

@@ -68,8 +68,9 @@
 
         </x-box>
 
-        <div class="flex justify-end m-2">
-            <x-add-button onclick="addBtn()">User</x-add-button>
+        <div class="flex justify-between m-2">
+            <x-link-button href="{{ route('userListExport') }}">Export Excel</x-link-button>
+            {{-- <x-add-button onclick="addBtn()">User</x-add-button> --}}
         </div>
 
         <div id="userListResult">
@@ -156,12 +157,12 @@
             }
         });
 
-        let url = "/editUser/1";
+        let url = "/addUser";
 
         $.ajax({
             url: url,
             success: function(res) {
-                $('#editUserModal').html(res);
+                $('#addUserModal').html(res);
                 stopPageLoading();
 
             }

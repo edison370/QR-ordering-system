@@ -8,25 +8,29 @@
 
                     <x-sidebar-menu>
                         <x-slot name="trigger">
-                            <div 
-                            class="block sm:hidden">
-                               <svg class="w-[32px] h-[32px] text-gray-800 dark:text-white" aria-hidden="true"
-                                   xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                   <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                       d="M9 8h10M9 12h10M9 16h10M5 8h0m0 4h0m0 4h0" />
-                               </svg>
-                           </div>
+                            <div class="block sm:hidden">
+                                <svg class="w-[32px] h-[32px] text-gray-800 dark:text-white" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                        d="M9 8h10M9 12h10M9 16h10M5 8h0m0 4h0m0 4h0" />
+                                </svg>
+                            </div>
                         </x-slot>
-                
+
+                        @if (session('table'))
+                            <x-slot name="header">
+                                <div class="text-base font-semibold text-gray-700 uppercase">{{ session('table') }}</div>
+                            </x-slot>
+                        @endif
 
                         <x-sidebar-link :href="route('client.home')" :active="request()->routeIs('client.home')">
                             <span class="ms-3">{{ __('Menu') }}</span>
                         </x-sidebar-link>
-                
-                        <x-sidebar-link :href="route('client.orderHistory')" :active="request()->routeIs('client.orderHistory')">         
+
+                        <x-sidebar-link :href="route('client.orderHistory')" :active="request()->routeIs('client.orderHistory')">
                             <span class="ms-3">{{ __('Order History') }}</span>
                         </x-sidebar-link>
-                
+
                     </x-sidebar-menu>
 
                     <a href="{{ route('client.home') }}">
@@ -48,6 +52,10 @@
                 </div>
 
             </div>
+
+            @if (session('table'))
+                <div class="sm:flex sm:items-center sm:ms-6">{{ session('table') }}</div>
+            @endif
 
         </div>
     </div>
