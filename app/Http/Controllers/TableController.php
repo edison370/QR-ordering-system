@@ -49,7 +49,7 @@ class TableController extends Controller
 
         do {
             $code = Str::random(8);
-        } while (Table::where("code",$code)->first());
+        } while (Table::where("code", $code)->first());
 
         $table = new Table;
         $table->code = $code;
@@ -66,4 +66,14 @@ class TableController extends Controller
         return view('modals.editTableModal', ['table' => $table]);
     }
 
+    public function setTable(Request $request)
+    {
+        $table = Table::where("code", $request->table)->first();
+
+        if (!$table) {
+            return response('Table not found');
+        }
+
+        return response('Table not found');
+    }
 }

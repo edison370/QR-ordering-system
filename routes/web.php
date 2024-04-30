@@ -32,6 +32,7 @@ Route::get('/CartView',function () {
     return view('modules.client.cartView');
 })->name('client.cartView');
 
+Route::post('/setTable', [TableController::class, 'setTable'])->name('setTable');
 Route::get('/getCartItem', [ItemController::class, 'getCartItems'])->name('getCartItem');
 Route::post('/changeCartQuantity', [ItemController::class, 'changeCartQuantity'])->name('changeCartQuantity');
 
