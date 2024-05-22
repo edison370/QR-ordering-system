@@ -43,7 +43,16 @@
                                     data-clipboard-target="#code{{ $loop->iteration }}">
                                     Copy
                                 </button>
+                                <button class="code bg-gray-800 hover:bg-gray-700 text-gray-300 px-3 py-1 rounded-md ml-2"
+                                    onclick="printQrBtn({{ $loop->iteration }})">
+                                    QR
+                                </button>
                             </div>
+                        </div>
+
+                        <div id="QR{{ $loop->iteration }}"
+                            class="hidden">
+                            {{ QrCode::generate(route('client.home')."?table=$table->code") }}
                         </div>
 
                     </x-table-data>
@@ -129,6 +138,16 @@
             }
         })
     };
+
+    function printQrBtn(id){
+        var prtContent = document.getElementById("QR"+id);
+        var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900');
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
+    }
 
     new ClipboardJS('.code');
 </script>

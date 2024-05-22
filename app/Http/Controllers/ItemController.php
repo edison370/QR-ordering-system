@@ -110,6 +110,7 @@ class ItemController extends Controller
         try {
             $newItem["quantity"] = $request->count;
             $newItem["id"] = $request->id;
+            $newItem["remark"] = $request->remark;
         } catch (Exception $ex) {
             return back()->withErrors('Item not found');
         }
@@ -136,6 +137,7 @@ class ItemController extends Controller
 
                 $temp["totalPrice"] = number_format($item["quantity"] * floatval($temp["price"]), 2, '.', ',');
                 $temp["quantity"] = $item["quantity"];
+                $temp["remark"] = $item["remark"] ? : "";
                 $itemList[] = $temp;
             }
         }else{

@@ -19,7 +19,7 @@
 
                         @if (session()->has('table'))
                             <x-slot name="header">
-                                <div class="text-base font-semibold text-gray-700 uppercase">{{ session('table') }}
+                                <div class="text-base font-bold text-gray-700 uppercase">Table {{ session('table') }}
                                 </div>
                             </x-slot>
                         @endif
@@ -55,7 +55,8 @@
             </div>
 
             @if (session()->has('table'))
-                <div class="sm:flex sm:items-center sm:ms-6">{{ session('table') }}</div>
+                <div class="sm:flex sm:items-center sm:ms-6 font-bold hidden sm:block">Table {{ session('table') }}
+                </div>
             @endif
 
         </div>
@@ -80,6 +81,9 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Table No" required="">
 
+                <span class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1" id="TableErrorMsg">
+                </span>
+
                 <!--Footer-->
                 <div class="flex justify-end pt-2">
                     <button id="setTableBtn">
@@ -90,8 +94,8 @@
                                 d="m9 5 7 7-7 7" />
                         </svg>
 
-                        <svg id="setTableLoading" class="inline w-5 h-5 me-2 text-white animate-spin hidden" viewBox="0 0 100 101"
-                            xmlns="http://www.w3.org/2000/svg">
+                        <svg id="setTableLoading" class="inline w-5 h-5 me-2 text-white animate-spin hidden"
+                            viewBox="0 0 100 101" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
                                 fill="#E5E7EB" />
@@ -130,17 +134,29 @@
                 data: {
                     table: table,
                 },
-                success: function(res) {
-                    console.log(res);
 
+                success: function(res) {
                     //After load completed remove loading animation
-                    $("#setTableLoading").addClass("hidden");
-                    $("#setTableIcon").removeClass("hidden");
-                    $("#setTableBtn").removeClass("pointer-events-none");
-                }
+                    disableLoading();
+
+                    location.reload();
+                },
+                error: function(res) {
+                    //After load completed remove loading animation
+                    disableLoading();
+
+                    TableErrorMsg.append(res['responseText']);
+                },
             })
 
         });
+
+
+        function disableLoading() {
+            $("#setTableLoading").addClass("hidden");
+            $("#setTableIcon").removeClass("hidden");
+            $("#setTableBtn").removeClass("pointer-events-none");
+        }
 
 
     });

@@ -112,7 +112,7 @@
                                 <div class="col-span-2">
                                     <label for="remark{{ $i->id }}"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks</label>
-                                    <textarea id="remark{{ $i->id }}" rows="4" x-model="remark"
+                                    <textarea id="remark{{ $i->id }}" rows="4" x-model="remark" x-text="remark"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Write remark here"></textarea>
                                 </div>
@@ -144,7 +144,7 @@
                                     :class="count < 1 ? 'bg-gray-300 cursor-not-allowed opacity-50' :
                                         'text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none hover:opacity-90 focus:ring-gray-300'"
                                     class="inline-flex items-center font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-                                    @click="addToCart({{ $i->id }},count)">
+                                    @click="addToCart({{ $i->id }},count,remark)">
                                     Add to Cart
                                 </button>
                             </div>
@@ -167,20 +167,20 @@
     });
 
 
-    function addToCart(id, count) {
+    function addToCart(id, count, remark) {
         $.ajax({
             type: "POST",
             url: "/addToCart",
             data: {
                 id: id,
                 count: count,
+                remark: remark,
             },
             success: function(res) {
                 $.ajax({
                     url: "/CartView",
                     success: function(res) {
                         $('#cartView').html(res);
-
                     }
                 })
             }

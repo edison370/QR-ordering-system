@@ -68,12 +68,13 @@ class TableController extends Controller
 
     public function setTable(Request $request)
     {
-        $table = Table::where("code", $request->table)->first();
+        $table = Table::where("description", $request->table)->first();
 
         if (!$table) {
-            return response('Table not found');
+            return response('Table not found', 400);
         }
 
-        return response('Table not found');
+        $request->session()->put('table', $table->description);
+        return response('Session set successfully', 200);
     }
 }

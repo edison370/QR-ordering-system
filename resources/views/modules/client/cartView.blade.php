@@ -1,13 +1,12 @@
 <div x-data="{
     open: false,
     count: 0,
-    remark: '',
 }">
 
     {{-- Cart Icon --}}
     <div class="fixed bottom-0 right-0 p-3 m-4 bg-white rounded-full border">
         @if (Cookie::has('item_data'))
-            <div class="absolute top-0 right-0">
+            <div class="absolute top-0 right-0" id="cartItemIcon">
                 <svg class="w-[20px] h-[20px] text-red" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor" viewBox="0 0 24 24">
                     <path fill-rule="evenodd"
@@ -132,17 +131,22 @@
                                         <img class="h-24" src="` + value["imagePath"] + `" alt="">
                                     </div>
                                     <div class="flex flex-col justify-center ml-4 flex-grow">
-                                        <span class="text-gray-500 text-xs">123</span>
+                                        <span class="text-gray-500 text-xs">`+value["name"]+`</span>
+                                        <span class="text-gray-500 text-xs">`+value["remark"]+`</span>
                                     </div>
                                 </div>
 
-                                <span class="text-center w-1/5 font-semibold text-sm">RM` + value["price"] + `</span>
+                                <span class="text-center w-2/5 font-semibold text-sm">RM` + value["price"] + `</span>
                             </div>
                         `;
 
                     $("#cartContainer").append(item);
 
                 });
+
+                if($.isEmptyObject(res)){
+                    $("#cartItemIcon").addClass("hidden");
+                }
 
             }
         })

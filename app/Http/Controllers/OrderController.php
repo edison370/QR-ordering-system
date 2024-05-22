@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Order;
+use App\Models\Table;
 
 class OrderController extends Controller
 {
     public function getClientOrder(Request $request){
-        $orders = Order::where("status","!=","Paid")->with('order_details.order')->get();
+        
+        $tableID = Table::where("description", $request->session()->get('table'))->first()->id ?? "";
+ 
+        $orders = Order::where("status","!=","Paid")->where("tableID", $tableID)->with('order_details.order')->get();
 
         return view('modules.client.orderPage', ['orders' => $orders])->render(); 
     }
@@ -52,6 +56,16 @@ class OrderController extends Controller
     {
         $order = order::findOrFail($id);
         return view('modals.editOrderModal', ['order' => $order]);
+    }
+
+    public function placeOrder(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:30',
+
+        ]);
+
+        return redirect('/')->with('success', 'Successfully placed order!');
     }
 
 }
