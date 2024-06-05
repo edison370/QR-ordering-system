@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/editOrder/{id}', [OrderController::class, 'getOrder']);
     Route::put('/order/{id}', [OrderController::class, 'updateOrder'])->name('updateOrder');
     Route::post('/order', [OrderController::class, 'createOrder'])->name('createOrder');
+    Route::post('/placeOrder', [OrderController::class, 'placeOrder'])->name('placeOrder');
 
     //Category
     Route::get('/getAllCategory', [CategoryController::class, 'getAllCategory'])->name('getAllCategory');

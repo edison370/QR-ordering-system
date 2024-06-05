@@ -129,22 +129,32 @@ class ItemController extends Controller
 
     public function getCartItems(Request $request)
     {
+        $total = 0;
         $itemData = unserialize($request->cookie('item_data'));
 
         if($itemData){
             foreach($itemData as $item){
-                $temp = Item::find($item["id"])->getOriginal();
+                $temp = Item::find($item["id"])->getRawOriginal();
 
-                $temp["totalPrice"] = number_format($item["quantity"] * floatval($temp["price"]), 2, '.', ',');
+                $temp["subTotal"] = $item["quantity"] * floatval($temp["price"]);
                 $temp["quantity"] = $item["quantity"];
                 $temp["remark"] = $item["remark"] ? : "";
+
+                $total += $temp["subTotal"];
+                $temp["price"] = number_format($temp["price"], 2, '.', ',');
+                $temp["subTotal"] = number_format($temp["subTotal"], 2, '.', ',');
+
                 $itemList[] = $temp;
+
             }
         }else{
             $itemList = null;
         }
 
-        return response()->json($itemList);
+        $data["item"] = $itemList;
+        $data["total"] = number_format($total, 2, '.', ',');
+
+        return response()->json($data);
     }
 
     public function changeCartQuantity(Request $request){

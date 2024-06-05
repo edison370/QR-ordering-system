@@ -64,6 +64,14 @@
 
                 </div>
 
+                <form class="fixed bottom-0 w-full border-t-2 z-50" action="{{ route('placeOrder') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="flex justify-between items-center mx-6 my-3">
+                        <div id="totalPrice"></div>
+                        <div id="placeOrderBtn"></div>
+                    </div>
+                </form>
+
             </div>
 
         </div>
@@ -74,6 +82,17 @@
 </div>
 
 </div>
+
+<script type="module">
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+    });
+</script>
 
 <script>
     $.ajaxSetup({
@@ -104,8 +123,9 @@
             url: "/getCartItem",
             success: function(res) {
                 $("#cartContainer").empty();
+                $("#placeOrderBtn").empty();
 
-                $.each(res, function(index, value) {
+                $.each(res['item'], function(index, value) {
                     var item =
                         `
                             <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
@@ -137,6 +157,7 @@
                                 </div>
 
                                 <span class="text-center w-2/5 font-semibold text-sm">RM` + value["price"] + `</span>
+                                <span class="text-center w-2/5 font-semibold text-sm">RM` + value["subTotal"] + `</span>
                             </div>
                         `;
 
@@ -144,8 +165,24 @@
 
                 });
 
-                if($.isEmptyObject(res)){
+                if($.isEmptyObject(res['item'])){
                     $("#cartItemIcon").addClass("hidden");
+
+                    $("#placeOrderBtn").append(`
+                    <button id="placeOrderBtn"  
+                        class= "inline-flex items-center font-medium rounded-lg text-sm px-6 py-2 text-center bg-gray-300 cursor-not-allowed opacity-50"
+                        type="submit">Place Order</button>
+                    `);
+
+                    $('#totalPrice').text("Total: 0.00");
+                }else{
+                    $("#placeOrderBtn").append(`
+                    <button id="placeOrderBtn"  
+                        class= "inline-flex items-center font-medium rounded-lg text-sm px-6 py-2 text-center text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none hover:opacity-90 focus:ring-gray-300"
+                        type="submit">Place Order</button>
+                    `);
+
+                    $('#totalPrice').text("Total: "+res['total']);
                 }
 
             }
