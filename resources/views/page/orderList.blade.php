@@ -2,7 +2,7 @@
 
     <x-slot name="header">
         <h2 class="flex font-semibold text-xl text-gray-500 leading-tight">
-            {{ __('order List') }}
+            {{ __('Order List') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
         <x-status-message /> {{-- Status Message--}}
 
         <div class="flex justify-end m-2">
-            <x-add-button onclick="addBtn()">order</x-add-button>
+            <x-add-button onclick="addBtn()">Order</x-add-button>
         </div>
 
         <div id="orderListResult">

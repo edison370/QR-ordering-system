@@ -23,7 +23,7 @@ class Order extends Model
     }
 
     public function table(){
-        return $this->belongsTo(Table::class);
+        return $this->belongsTo(Table::class,"tableID","id");
     }
     
     protected $casts = [

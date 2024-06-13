@@ -27,6 +27,7 @@ Route::get('/home', [MenuController::class, 'homeCategory'])->name('client.home'
 Route::get('/Category/{name}', [MenuController::class, 'getCategoryItems'])->name('client.itemResult');
 Route::get('/OrderHistory', [OrderController::class, 'getClientOrder'])->name('client.orderHistory');
 Route::post('/addToCart', [ItemController::class, 'addToCart'])->name('client.addToCart');
+Route::post('/placeOrder', [OrderController::class, 'placeOrder'])->name('placeOrder');
 
 Route::get('/CartView',function () {
     return view('modules.client.cartView');
@@ -79,7 +80,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/editOrder/{id}', [OrderController::class, 'getOrder']);
     Route::put('/order/{id}', [OrderController::class, 'updateOrder'])->name('updateOrder');
     Route::post('/order', [OrderController::class, 'createOrder'])->name('createOrder');
-    Route::post('/placeOrder', [OrderController::class, 'placeOrder'])->name('placeOrder');
 
     //Category
     Route::get('/getAllCategory', [CategoryController::class, 'getAllCategory'])->name('getAllCategory');

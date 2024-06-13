@@ -23,6 +23,14 @@
                 placeholder="Price" required="">
         </div>
 
+        <button
+            class="inline-flex items-center justify-center active:scale-95 rounded-full bg-lime-500 px-4 py-2 font-medium text-sm text-white outline-none focus:ring hover:opacity-90 focus:ring-gray-300">
+            Confirm
+        </button>
+        <button
+            class="inline-flex items-center justify-center active:scale-95 rounded-full bg-red-500 px-4 py-2 font-medium text-sm text-white outline-none focus:ring hover:opacity-90 focus:ring-gray-300">
+            Cancel
+        </button>
     </div>
 
 </x-modal>

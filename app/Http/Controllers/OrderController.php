@@ -26,7 +26,7 @@ class OrderController extends Controller
         $name = $request->name ?: "";
         //$offer = ($request->offer !== null ? $request->offer : 0) ;
 
-        $orders = Order::paginate(10);
+        $orders = Order::with('order_details')->with('table')->paginate(10);
 
         //remove page request
         $requestUrl = str_replace('&page=' . $request->page, '', $_SERVER["REQUEST_URI"]);

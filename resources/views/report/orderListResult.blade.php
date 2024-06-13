@@ -6,13 +6,13 @@
                 No
             </x-table-header>
             <x-table-header>
-                Name
+                Table No
             </x-table-header>
             <x-table-header>
-                Description
+                Amount
             </x-table-header>
             <x-table-header>
-                Price (RM)
+                Status
             </x-table-header>
             <x-table-header>
                 Created at
@@ -33,13 +33,13 @@
                         {{ $loop->iteration }}
                     </x-table-data>
                     <x-table-data>
-                        {{ $order->name }}
+                        {{ $order->table->description }}
                     </x-table-data>
                     <x-table-data>
-                        {{ $order->description }}
+                        {{ $order->amount }}
                     </x-table-data>
                     <x-table-data>
-                        {{ $order->price }}
+                        {{ $order->status }}
                     </x-table-data>
                     <x-table-data>
                         {{ $order->created_at }}
